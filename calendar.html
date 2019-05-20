@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>日历-小工具</title>
+    <script src="js/jquery-3.4.0.js"></script>
+    <script src="js/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/calendar.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="calendar" id="calendar">
+            <div class="topbar">
+                <div class="summary">
+                    <label class="month" id="month"
+                        style="font-size:2.25rem;display: inline-block;vertical-align: bottom;margin:5% 0 0 5%;">{{month}}</label>
+                    <div style="display:inline-flex;flex-direction:column;font-size: 0.875rem;vertical-align: bottom;">
+                        <label class="week" id="day">{{day}}</label>
+                        <label class="year" id="year">{{year}}</label>
+                    </div>
+                </div>
+                <div class="weeks" style="margin-top:5%;">
+                    <ul class="weeks-sort">
+                        <li><label>日</label></li>
+                        <li><label>一</label></li>
+                        <li><label>二</label></li>
+                        <li><label>三</label></li>
+                        <li><label>四</label></li>
+                        <li><label>五</label></li>
+                        <li><label>六</label></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content">
+                <ul class="days">
+                    <li v-for="day in days">
+                        <span v-if="day.day.getMonth()+1 != currentMonth" class="other-month">{{day.day.getDate()}}</span>
+                        <span v-else>
+                            <span v-if="day.day.getFullYear() == new Date().getFullYear() && day.day.getMonth() == new Date().getMonth() && day.day.getDate() == new Date().getDate()" class="active">{{day.day.getDate()}}</span>
+                            <span v-else>{{day.day.getDate()}}</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="custom"></div>
+        <div class="weather"></div>
+        <div class="setup"></div>
+    </div>
+    <script src="js/calendar.js"></script>
+</body>
+
+</html>

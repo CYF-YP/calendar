@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 16px;
+    background-color: rgb(245, 245, 245);
+}
+
+ul,
+li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    list-sytle-type:none;
+}
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid  rgb(218, 218, 218);
+}
+
+.summary {
+    height: 10vh;
+}
+
+.weeks-sort {
+    display: flex;
+    justify-content: space-around;
+    height: 5vh;
+    font-size: 0.875rem;
+    color: rgb(149, 149, 149);
+    box-sizing: border-box;
+    padding: 0 1%;
+}
+
+.weeks-sort li {
+    display: inline-block;
+    width: 14%;
+    line-height: 5vh;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.content {
+    width: 100%;
+    margin-top: 20vh;
+}
+
+.days {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    padding: 0 1%;
+}
+
+.days li {
+    display: inline-block;
+    width: 14%;
+    text-align: center;
+    font-size: 1.3125rem;
+    line-height: 10vh;
+}
+
+.active{
+    color: #fff;
+    width: 12vw;
+    height: 12vw;
+    display: inline-block;
+    background: #0090F0;
+    -moz-border-radius: 7vw;
+    -webkit-border-radius: 7vw;
+    border-radius: 6vw;
+    vertical-align: middle;
+    line-height: 12vw;
+}
+
+.other-month {
+    color: gray;
+}
