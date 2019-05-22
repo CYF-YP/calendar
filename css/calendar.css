@@ -46,7 +46,7 @@ li {
     vertical-align: middle;
 }
 
-.content {
+div.calendarContent {
     width: 100%;
     margin-top: 20vh;
 }

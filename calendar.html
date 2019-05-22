@@ -8,7 +8,9 @@
     <title>日历-小工具</title>
     <script src="js/jquery-3.4.0.js"></script>
     <script src="js/vue.js"></script>
+    <script src="C:\Users\Administrator\Desktop\projects\swiper.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/calendar.css">
+    <link rel="stylesheet" type="text/css" href="C:\Users\Administrator\Desktop\projects\swiper.min.css" />
 </head>
 
 <body>
@@ -35,16 +37,25 @@
                     </ul>
                 </div>
             </div>
-            <div class="content">
-                <ul class="days">
-                    <li v-for="day in days">
-                        <span v-if="day.day.getMonth()+1 != currentMonth" class="other-month">{{day.day.getDate()}}</span>
-                        <span v-else>
-                            <span v-if="day.day.getFullYear() == new Date().getFullYear() && day.day.getMonth() == new Date().getMonth() && day.day.getDate() == new Date().getDate()" class="active">{{day.day.getDate()}}</span>
-                            <span v-else>{{day.day.getDate()}}</span>
-                        </span>
-                    </li>
-                </ul>
+            <div class="swiper-container calendarContent">
+                <div class="swiper-wrapper">
+                    <div class="previousContent swiper-slide"></div>
+                    <div class="content swiper-slide">
+                        <ul class="days">
+                            <li v-for="day in days">
+                                <span v-if="day.day.getMonth()+1 != currentMonth"
+                                    class="other-month">{{day.day.getDate()}}</span>
+                                <span v-else>
+                                    <span
+                                        v-if="day.day.getFullYear() == new Date().getFullYear() && day.day.getMonth() == new Date().getMonth() && day.day.getDate() == new Date().getDate()"
+                                        class="active">{{day.day.getDate()}}</span>
+                                    <span v-else>{{day.day.getDate()}}</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nextContent swiper-slide"></div>
+                </div>
             </div>
         </div>
         <div class="custom"></div>
