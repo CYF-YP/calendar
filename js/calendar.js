@@ -210,15 +210,16 @@ $(function () {
         observer: true,//修改swiper自己或子元素时，自动初始化swiper
         observeParents: true,//修改swiper的父元素时，自动初始化swiper
         observeSlideChildren: !0,
+        shortSwipes : !0,
         onTouchEnd: function (swiper) {
             // console.log(swiper);
         },
         onTouchEnd: function (swiper) {
-            if (swiper.activeIndex == 2) {
-                lastSlid();
-            }else if (swiper.activeIndex == 0) {
-                lastSlid();
-            }
+            // if (swiper.activeIndex == 2) {
+            //     lastSlid();
+            // }else if (swiper.activeIndex == 0) {
+            //     lastSlid();
+            // }
             delDecoration();
             console.log(nowMonth+1);
             console.log(nowYear);
@@ -226,20 +227,21 @@ $(function () {
     });
     setTimeout(function () { mySwiper.init(); }, 4000);
     //左右滑动处理
-    function lastSlid() {
-        console.log(mySwiper.swipeDirection);
-        if(mySwiper.swipeDirection == 'next') {
-            if(mySwiper.activeIndex == 2) {
-                mySwiper.slideTo(0);
-            }
-        }
-        if(mySwiper.swipeDirection == 'prev') {
-            if(mySwiper.activeIndex == 0) {
-                mySwiper.slideTo(2);
-            }
-        }
-    }
+    // function lastSlid() {
+    //     console.log(mySwiper.swipeDirection);
+    //     if(mySwiper.swipeDirection == 'next') {
+    //         if(mySwiper.activeIndex == 2) {
+    //             mySwiper.slideTo(0);
+    //         }
+    //     }
+    //     if(mySwiper.swipeDirection == 'prev') {
+    //         if(mySwiper.activeIndex == 0) {
+    //             mySwiper.slideTo(2);
+    //         }
+    //     }
+    // }
     function delDecoration() {
+        console.log(mySwiper.activeIndex);
         // console.log($(mySwiper.slides[mySwiper.activeIndex]));
         if(mySwiper.swipeDirection == 'next') {
             if(mySwiper.activeIndex == 2) {
@@ -249,13 +251,14 @@ $(function () {
                 $(mySwiper.slides[mySwiper.activeIndex]).addClass('previousContent');
                 $(mySwiper.slides[mySwiper.activeIndex]).prev().addClass('nextContent');
                 $(mySwiper.slides[mySwiper.activeIndex]).prev().prev().addClass('content');
+                mySwiper.slideTo(0);
             } else if(mySwiper.activeIndex == 1) {
                 $(mySwiper.slides[mySwiper.activeIndex]).removeClass('previousContent content nextContent');
                 $(mySwiper.slides[mySwiper.activeIndex-1]).removeClass('previousContent content nextContent');
                 $(mySwiper.slides[mySwiper.activeIndex+1]).removeClass('previousContent content nextContent');
                 $(mySwiper.slides[mySwiper.activeIndex]).addClass('previousContent');
-                $(mySwiper.slides[mySwiper.activeIndex]).prev().addClass('content');
-                $(mySwiper.slides[mySwiper.activeIndex]).next().addClass('nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).prev().addClass('nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).next().addClass('content');
             }else if(mySwiper.activeIndex == 0) {
                 $(mySwiper.slides[mySwiper.activeIndex]).removeClass('previousContent content nextContent');
                 $(mySwiper.slides[mySwiper.activeIndex+1]).removeClass('previousContent content nextContent');
@@ -287,6 +290,7 @@ $(function () {
                 $(mySwiper.slides[mySwiper.activeIndex]).addClass('nextContent');
                 $(mySwiper.slides[mySwiper.activeIndex]).next().next().addClass('content');
                 $(mySwiper.slides[mySwiper.activeIndex]).next().addClass('previousContent');
+                mySwiper.slideTo(2);
             }
             calendarVue.pickPre(nowYear,nowMonth);
         }
