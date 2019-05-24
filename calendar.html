@@ -19,10 +19,10 @@
             <div class="topbar">
                 <div class="summary">
                     <label class="month" id="month"
-                        style="font-size:2.25rem;display: inline-block;vertical-align: bottom;margin:5% 0 0 5%;">{{month}}</label>
+                        style="font-size:2.25rem;display: inline-block;vertical-align: bottom;margin:5% 0 0 5%;">{{month+1}}月</label>
                     <div style="display:inline-flex;flex-direction:column;font-size: 0.875rem;vertical-align: bottom;">
-                        <label class="week" id="day">{{day}}</label>
-                        <label class="year" id="year">{{year}}</label>
+                        <label class="week" id="day">周{{day}}</label>
+                        <label class="year" id="year">{{year}}年</label>
                     </div>
                 </div>
                 <div class="weeks" style="margin-top:5%;">
@@ -40,10 +40,10 @@
             <div class="swiper-container calendarContent">
                 <div class="swiper-wrapper">
                     <div class="previousContent swiper-slide"></div>
-                    <div class="content swiper-slide">
+                    <div class="content swiper-slide data-source">
                         <ul class="days">
                             <li v-for="day in days">
-                                <span v-if="day.day.getMonth()+1 != currentMonth"
+                                <span v-if="day.day.getMonth() != currentMonth"
                                     class="other-month">{{day.day.getDate()}}</span>
                                 <span v-else>
                                     <span
@@ -62,7 +62,7 @@
         <div class="weather"></div>
         <div class="setup"></div>
     </div>
-    <script src="js/calendar.js"></script>
+    <script src="js/calendar1.js"></script>
 </body>
 
 </html>

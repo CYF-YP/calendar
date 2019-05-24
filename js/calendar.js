@@ -10,6 +10,7 @@ var nowDate = myDate.getDate();
 var nowDay = myDate.getDay();
 const month_olypic = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const month_normal = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var count_init = 0;
 //判断闰年
 function isLeap(yy) {
     var tem_year = yy;
@@ -144,8 +145,14 @@ $(function () {
                 this.$forceUpdate();
                 setTimeout(function () { 
                     var html;
-                    html = $('.content').html();
-                    $('.previousContent').html(html); 
+                    html = $('.data-source').html();
+                    if(!$('.content').hasClass('.data-source')) {
+                        $('.content').html(html); 
+                    }
+                    if(count_init<2) {
+                        $('.previousContent').html(html);
+                        count_init++;
+                    }
                 }, 1000);
                 // this.$nextTick(() => {
                 //     var html;
@@ -167,8 +174,14 @@ $(function () {
                 this.$forceUpdate();
                 setTimeout(function () { 
                     var html;
-                    html = $('.content').html();
-                    $('.nextContent').html(html); 
+                    html = $('.data-source').html();
+                    if(!$('.content').hasClass('.data-source')) {
+                        $('.content').html(html);
+                    }
+                    if(count_init<2) {
+                        $('.nextContent').html(html);
+                        count_init++;
+                    } 
                 }, 2000);
                 // this.$nextTick(() => {
                 //     var html;
