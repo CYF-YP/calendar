@@ -99,9 +99,13 @@ $(function(){
             pickPre: function() {
                 var temyear = this.year;
                 var temmonth = this.month;
+                temmonth -= 1;
+                month -= 1;
                 if(temmonth-1<0) {
                     temmonth = 11;
                     temyear = temyear-1;
+                    month = 11;
+                    year -= 1;
                 }
                 var data = new Date(this.formatDate(temyear, temmonth, 1));
                 this.initData(data);
@@ -109,9 +113,13 @@ $(function(){
             pickNext: function() {
                 var temyear = this.year;
                 var temmonth = this.month;
-                if(temmonth+1>11) {
+                temmonth += 1;
+                month +=1
+                if(temmonth>11) {
                     temmonth = 0;
                     temyear = temyear+1;
+                    month = 0;
+                    year += 1;
                 }
                 var data = new Date(this.formatDate(temyear, temmonth, 1));
                 this.initData(data);
@@ -136,14 +144,62 @@ $(function(){
         observeSlideChildren: !0,
         shortSwipes : !0,
         onTouchEnd: function (swiper) {
-
-        },
-        onTouchEnd: function (swiper) {
             delDecoration();
         },
     });
 
+    // 处理滑动问题，topbar时间需要跟随改变
     function delDecoration() {
-        
+        if(mySwiper.swipeDirection == 'next') {
+            if(mySwiper.activeIndex == 2) {
+                $(mySwiper.slides[mySwiper.activeIndex]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex-1]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex-2]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).addClass('previousContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).prev().addClass('nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).prev().prev().addClass('content');
+                mySwiper.slideTo(0);
+            } else if(mySwiper.activeIndex == 1) {
+                $(mySwiper.slides[mySwiper.activeIndex]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex-1]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex+1]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).addClass('previousContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).prev().addClass('nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).next().addClass('content');
+            }else if(mySwiper.activeIndex == 0) {
+                $(mySwiper.slides[mySwiper.activeIndex]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex+1]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex+2]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).addClass('previousContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).next().next().addClass('nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).next().addClass('content');
+            }
+            calendarVue.pickNext(year,month);
+        }else {
+            if(mySwiper.activeIndex == 2) {
+                $(mySwiper.slides[mySwiper.activeIndex]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex-1]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex-2]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).addClass('nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).prev().addClass('content');
+                $(mySwiper.slides[mySwiper.activeIndex]).prev().prev().addClass('previousContent');
+            } else if(mySwiper.activeIndex == 1) {
+                $(mySwiper.slides[mySwiper.activeIndex]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex-1]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex+1]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).addClass('nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).prev().addClass('content');
+                $(mySwiper.slides[mySwiper.activeIndex]).next().addClass('previousContent');
+            }else if(mySwiper.activeIndex == 0) {
+                $(mySwiper.slides[mySwiper.activeIndex]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex+1]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex+2]).removeClass('previousContent content nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).addClass('nextContent');
+                $(mySwiper.slides[mySwiper.activeIndex]).next().next().addClass('content');
+                $(mySwiper.slides[mySwiper.activeIndex]).next().addClass('previousContent');
+                mySwiper.slideTo(2);
+            }
+            calendarVue.pickPre(year,month);
+        }
     }
 });
