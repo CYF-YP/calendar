@@ -82,6 +82,20 @@ div.calendarContent {
     line-height: 12vw;
 }
 
+.actived{
+    color: inherit;
+    width: 12vw;
+    height: 12vw;
+    display: inline-block;
+    background: inherit;
+    -moz-border-radius: 7vw;
+    -webkit-border-radius: 7vw;
+    border-radius: 6vw;
+    vertical-align: middle;
+    line-height: 12vw;
+    border: 1px solid gray;
+}
+
 .other-month {
     color: gray;
 }

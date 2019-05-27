@@ -39,22 +39,57 @@
             </div>
             <div class="swiper-container calendarContent">
                 <div class="swiper-wrapper">
-                    <div class="previousContent swiper-slide"></div>
-                    <div class="content swiper-slide data-source">
+                    <div class="previousContent swiper-slide">
                         <ul class="days">
                             <li v-for="day in days">
-                                <span v-if="day.day.getMonth() != currentMonth"
+                                <span v-if="day.day.getMonth() != month"
                                     class="other-month">{{day.day.getDate()}}</span>
                                 <span v-else>
                                     <span
                                         v-if="day.day.getFullYear() == new Date().getFullYear() && day.day.getMonth() == new Date().getMonth() && day.day.getDate() == new Date().getDate()"
                                         class="active">{{day.day.getDate()}}</span>
-                                    <span v-else>{{day.day.getDate()}}</span>
+                                    <span v-else>
+                                        <span v-if="day.day.getDate() == date" class="actived">{{day.day.getDate()}}</span>
+                                        <span v-else>{{day.day.getDate()}}</span>
+                                    </span>
                                 </span>
                             </li>
                         </ul>
                     </div>
-                    <div class="nextContent swiper-slide"></div>
+                    <div class="content swiper-slide data-source">
+                        <ul class="days">
+                            <li v-for="day in days">
+                                <span v-if="day.day.getMonth() != month"
+                                    class="other-month">{{day.day.getDate()}}</span>
+                                <span v-else>
+                                    <span
+                                        v-if="day.day.getFullYear() == new Date().getFullYear() && day.day.getMonth() == new Date().getMonth() && day.day.getDate() == new Date().getDate()"
+                                        class="active">{{day.day.getDate()}}</span>
+                                    <span v-else>
+                                        <span v-if="day.day.getDate() == date" class="actived">{{day.day.getDate()}}</span>
+                                        <span v-else>{{day.day.getDate()}}</span>
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nextContent swiper-slide">
+                        <ul class="days">
+                            <li v-for="day in days">
+                                <span v-if="day.day.getMonth() != month"
+                                    class="other-month">{{day.day.getDate()}}</span>
+                                <span v-else>
+                                    <span
+                                        v-if="day.day.getFullYear() == new Date().getFullYear() && day.day.getMonth() == new Date().getMonth() && day.day.getDate() == new Date().getDate()"
+                                        class="active">{{day.day.getDate()}}</span>
+                                    <span v-else>
+                                        <span v-if="day.day.getDate() == date" class="actived">{{day.day.getDate()}}</span>
+                                        <span v-else>{{day.day.getDate()}}</span>
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,7 +97,7 @@
         <div class="weather"></div>
         <div class="setup"></div>
     </div>
-    <script src="js/calendar1.js"></script>
+    <script src="js/calendar.js"></script>
 </body>
 
 </html>
