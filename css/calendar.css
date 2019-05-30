@@ -48,7 +48,8 @@ li {
 
 div.calendarContent {
     width: 100%;
-    margin-top: 20vh;
+    margin-top: 18vh;
+    height: 54vh;
 }
 
 .days {
@@ -65,8 +66,8 @@ div.calendarContent {
     display: inline-block;
     width: 14%;
     text-align: center;
-    font-size: 1.3125rem;
-    line-height: 10vh;
+    font-size: 1rem;
+    position:relative;
 }
 
 .active{
@@ -79,7 +80,7 @@ div.calendarContent {
     -webkit-border-radius: 7vw;
     border-radius: 6vw;
     vertical-align: middle;
-    line-height: 12vw;
+    margin: 0 auto;
 }
 
 .actived{
@@ -92,10 +93,32 @@ div.calendarContent {
     -webkit-border-radius: 7vw;
     border-radius: 6vw;
     vertical-align: middle;
-    line-height: 12vw;
+    margin: 0 auto;
     border: 1px solid gray;
 }
 
 .other-month {
     color: gray;
+}
+
+.other-month,.this-month{
+    display: -webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+    -webkit-box-orient: vertical;
+    text-align: center;
+    position: relative;
+}
+
+.lunar {
+    display:block;
+    font-size:0.6rem;
+    line-height:initial;
+}
+
+.mark {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.3rem;
 }
