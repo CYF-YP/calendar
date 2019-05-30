@@ -540,91 +540,118 @@ var calendar = {
 
 // 判断假期
 function getVacation(temyear, temmonth, callback) {
-    let finalI = [];
+    // 方法1
     holidays = [];
     breakOffdays = [];
     currentData = [];
     var temmonthList = [temmonth - 1, temmonth, temmonth + 1];
-    for (let i = 0; i < temmonthList.length; i++) {
-        (function(i){
-            var getYear = temyear;
-            if (temmonthList[i] == -1) {
-                temmonthList[i] = 12;
-                getYear -= 1;
-            } else if (temmonthList[i] == 12) {
-                temmonthList[i] = 0;
-                getYear += 1;
-            }
-            finalI.push(0);
-            // 法定节假日,该请求支持按年取值
+    // let finalI = [];
+    // for (let i = 0; i < temmonthList.length; i++) {
+    //     (function (i) {
+    //         var getYear = temyear;
+    //         if (temmonthList[i] == -1) {
+    //             temmonthList[i] = 12;
+    //             getYear -= 1;
+    //         } else if (temmonthList[i] == 12) {
+    //             temmonthList[i] = 0;
+    //             getYear += 1;
+    //         }
+    //         finalI.push(0);
+    //         // 法定节假日,该请求支持按年取值
+    //         $.get("http://timor.tech/api/holiday/year/" + getYear + '-' + (temmonthList[i] + 1), function (data) {
+    //             if (data.code == 0) {
+    //                 $.each(data.holiday, function (index, value) {
+    //                     let dateObj = {};
+    //                     if (value.holiday) {
+    //                         dateObj.date = getYear + '-' + index;
+    //                         holidays.push(dateObj);
+    //                     } else {
+    //                         dateObj.date = getYear + '-' + index;
+    //                         breakOffdays.push(dateObj);
+    //                     }
+    //                 });
+    //             }
+    //             finalI[i] = 1;
+    //             var judge = true;
+    //             finalI.map(function (value, index) {
+    //                 if (!finalI[index]) {
+    //                     judge = false;
+    //                 }
+    //             });
+    //             if (judge) {
+    //                 callback();
+    //             }
+    //         });
+    //     })(i);
+    //     // 农历
+    //     // for(let j = 0; j < getMonthData(getYear, temmonthList[i]); j++) {
+    //     // // for(let j = 0; j < 1; j++) {
+    //     //     $.ajax({
+    //     //         url:"http://v.juhe.cn/calendar/day?date=" + getYear + "-" + (temmonthList[i]+1) + "-" + (j+1) + "&key=9ad22be50571125cb4c19309100ac5b2",
+    //     //         dataType: 'jsonp',
+    //     //         type: 'GET',
+    //     //         dataType:"jsonp",
+    //     //         data:{},
+    //     //         async:true,
+    //     //         success: function (data) {
+    //     //             if(data.error_code == 0) {
+    //     //                 let dateObj = {};
+    //     //                 let holidayDesc = data.result.data.holiday || "";
+    //     //                 if(holidayDesc != "") {
+    //     //                     dateObj.date = data.result.data.date;
+    //     //                     dateObj.desc = holidayDesc;
+    //     //                     currentData.push(dateObj);
+    //     //                 } else {
+    //     //                     dateObj.date = data.result.data.date;
+    //     //                     dateObj.desc = data.result.data.lunar.substr(2, 2);
+    //     //                     currentData.push(dateObj);
+    //     //                 }
+    //     //                 console.log(currentData);
+    //     //             }
+    //     //         },
+    //     //         error: function(jqXHR, textStatus, ex) {
+    //     //             console.log('request failed, cause: ' + ex.message);
+    //     //         },
+    //     //     });
+    //     // }
+    // }
+    // 方法2
+    var promises = [];
+    for (var i = 0; i < temmonthList.length; i++) {
+        var getYear = temyear;
+        if (temmonthList[i] == -1) {
+            temmonthList[i] = 12;
+            getYear -= 1;
+        } else if (temmonthList[i] == 12) {
+            temmonthList[i] = 0;
+            getYear += 1;
+        }
+        // 法定节假日,该请求支持按年取值
+        const promise = new Promise(function (resolve, reject) {
+            //这里把请求改成同步
             $.get("http://timor.tech/api/holiday/year/" + getYear + '-' + (temmonthList[i] + 1), function (data) {
                 if (data.code == 0) {
-                    $.each(data.holiday, function(index, value){
-                        let dateObj = {};
-                        if (value.holiday) {
-                            dateObj.date = getYear + '-' + index;
-                            holidays.push(dateObj);
-                        } else {
-                            dateObj.date = getYear + '-' + index;
-                            breakOffdays.push(dateObj);
-                        }
-                    });
-                    // for (k in data.holiday) {
-                    //     let dateObj = {};
-                    //     if (data.holiday[k].holiday) {
-                    //         dateObj.date = getYear + '-' + k;
-                    //         holidays.push(dateObj);
-                    //     } else {
-                    //         dateObj.date = getYear + '-' + k;
-                    //         breakOffdays.push(dateObj);
-                    //     }
-                    // }
-                }
-                finalI[i] = 1;
-                var judge = true;
-                finalI.map(function(value, index){
-                    if(!finalI[index]) {
-                        judge = false;
-                    }
-                });
-                if (judge) {
-                    callback();
+                    resolve(data.holiday);
                 }
             });
-        })(i);
-        // 农历
-        // for(let j = 0; j < getMonthData(getYear, temmonthList[i]); j++) {
-        // // for(let j = 0; j < 1; j++) {
-        //     $.ajax({
-        //         url:"http://v.juhe.cn/calendar/day?date=" + getYear + "-" + (temmonthList[i]+1) + "-" + (j+1) + "&key=9ad22be50571125cb4c19309100ac5b2",
-        //         dataType: 'jsonp',
-        //         type: 'GET',
-        //         dataType:"jsonp",
-        //         data:{},
-        //         async:true,
-        //         success: function (data) {
-        //             if(data.error_code == 0) {
-        //                 let dateObj = {};
-        //                 let holidayDesc = data.result.data.holiday || "";
-        //                 if(holidayDesc != "") {
-        //                     dateObj.date = data.result.data.date;
-        //                     dateObj.desc = holidayDesc;
-        //                     currentData.push(dateObj);
-        //                 } else {
-        //                     dateObj.date = data.result.data.date;
-        //                     dateObj.desc = data.result.data.lunar.substr(2, 2);
-        //                     currentData.push(dateObj);
-        //                 }
-        //                 console.log(currentData);
-        //             }
-        //         },
-        //         error: function(jqXHR, textStatus, ex) {
-        //             console.log('request failed, cause: ' + ex.message);
-        //         },
-        //     });
-        // }
+        });
+        promises.push(promise);
     }
-
+    Promise.all(promises).then(function (res) {
+        $.each(res, function(index, value){
+            $.each(value, function(i,v){
+                let dateObj = {};
+                if (v.holiday) {
+                    dateObj.date = getYear + '-' + i;
+                    holidays.push(dateObj);
+                } else {
+                    dateObj.date = getYear + '-' + i;
+                    breakOffdays.push(dateObj);
+                }
+            });
+        });
+        callback();
+    });
 }
 
 //判断闰年
@@ -690,8 +717,8 @@ $(function () {
                 var allMonthDays = getWeekDada(data.getFullYear(), data.getMonth(), 1);
                 var str = this.formatDate(data.getFullYear(), data.getMonth() + 1, 1);
                 getVacation(year, month, function () {
-                    console.log(breakOffdays);
-                    console.log(holidays);
+                    // console.log(breakOffdays);
+                    // console.log(holidays);
                     // 上月
                     for (let i = firstDay; i > 0; i--) {
                         var temData = new Date(str);
@@ -702,7 +729,7 @@ $(function () {
                             if (breakOffdays[m].date == calendarVue.formatDate(dayObject.day.getFullYear(), dayObject.day.getMonth() + 1, dayObject.day.getDate())) {
                                 dayObject.markOT = '班';
                                 break;
-                            }else{
+                            } else {
                                 dayObject.markOT = '';
                             }
                         }
@@ -710,7 +737,7 @@ $(function () {
                             if (holidays[n].date == calendarVue.formatDate(dayObject.day.getFullYear(), dayObject.day.getMonth() + 1, dayObject.day.getDate())) {
                                 dayObject.markP = '休';
                                 break;
-                            }else{
+                            } else {
                                 dayObject.markP = '';
                             }
                         }
@@ -727,7 +754,7 @@ $(function () {
                             if (breakOffdays[m].date == calendarVue.formatDate(dayObject.day.getFullYear(), dayObject.day.getMonth() + 1, dayObject.day.getDate())) {
                                 dayObject.markOT = '班';
                                 break;
-                            }else{
+                            } else {
                                 dayObject.markOT = '';
                             }
                         }
@@ -735,7 +762,7 @@ $(function () {
                             if (holidays[n].date == calendarVue.formatDate(dayObject.day.getFullYear(), dayObject.day.getMonth() + 1, dayObject.day.getDate())) {
                                 dayObject.markP = '休';
                                 break;
-                            }else{
+                            } else {
                                 dayObject.markP = '';
                             }
                         }
@@ -753,7 +780,7 @@ $(function () {
                             if (breakOffdays[m].date == calendarVue.formatDate(dayObject.day.getFullYear(), dayObject.day.getMonth() + 1, dayObject.day.getDate())) {
                                 dayObject.markOT = '班';
                                 break;
-                            }else{
+                            } else {
                                 dayObject.markOT = '';
                             }
                         }
@@ -761,15 +788,15 @@ $(function () {
                             if (holidays[n].date == calendarVue.formatDate(dayObject.day.getFullYear(), dayObject.day.getMonth() + 1, dayObject.day.getDate())) {
                                 dayObject.markP = '休';
                                 break;
-                            }else{
+                            } else {
                                 dayObject.markP = '';
                             }
                         }
                         dayObject.lunar = calendar.solar2lunar(dayObject.day.getFullYear(), dayObject.day.getMonth() + 1, dayObject.day.getDate());
                         calendarVue.days.push(dayObject);
                     }
-                    console.log(calendarVue.days);
-                    calendarVue.$nextTick(function(){calendarVue.handleHeight();});
+                    // console.log(calendarVue.days);
+                    calendarVue.$nextTick(function () { calendarVue.handleHeight(); });
                 });
             },
             pickPre: function () {
@@ -818,7 +845,7 @@ $(function () {
                 if (d < 10) d = '0' + d;
                 return y + '-' + m + '-' + d;
             },
-            handleHeight: function() {
+            handleHeight: function () {
                 $('.days > li').height($('.calendarContent').height() / Math.ceil(this.days.length / 7) * 0.8);
                 $('.days > li').css({ 'margin-top': $('.calendarContent').height() / Math.ceil(this.days.length / 7) * 0.2 });
             }
