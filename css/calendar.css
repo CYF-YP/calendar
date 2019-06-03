@@ -108,6 +108,7 @@ div.calendarContent {
     -webkit-box-orient: vertical;
     text-align: center;
     position: relative;
+    height: 12vw;
 }
 
 .lunar {
@@ -118,7 +119,8 @@ div.calendarContent {
 
 .mark {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 2px;
+    right: 2px;
     font-size: 0.3rem;
+    transform: scale(0.6);
 }
