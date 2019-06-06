@@ -16,6 +16,10 @@ li {
     list-sytle-type:none;
 }
 
+.container {
+    max-width: 750px;
+}
+
 .topbar {
     position: fixed;
     top: 0;
